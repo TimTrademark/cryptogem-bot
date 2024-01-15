@@ -16,11 +16,14 @@ class MEXCConnector(ExchangeConnector):
             raise RuntimeError("MEXC: api key or api secret was empty, aborting...")
         self.mexc = ccxt.mexc({'apiKey': self.api_key, 'secret': self.api_secret})
 
-    def get_formatted_pair_str(self, pair: Pair) -> str:
-        return f"{pair.coin0.symbol}{pair.coin1.symbol}"
+    def get_connector_name(self) -> str:
+        return "MEXC"
 
     def execute_buy_order(self, pair: Pair, funds: float):
-        pass
+        self.mexc.create_order(self.get_formatted_pair_str(pair), "market", "buy", None, None, {
+            "quoteOrderQty": funds,
+        })
+        self.mexc.create_market_buy_order(self.get_formatted_pair_str(pair))
 
     def get_latest_pairs(self) -> List[Pair]:
         res = requests.get("https://www.mexc.com/api/platform/spot/market-v2/web/coin/new/list")
@@ -34,3 +37,6 @@ class MEXCConnector(ExchangeConnector):
 
     def _convert_to_pairs(self, json: str) -> List[Pair]:
         return list(map(lambda p: Pair(Coin(p["cn"]), Coin(p["mn"]), False), json["data"]))
+
+    def get_formatted_pair_str(self, pair: Pair) -> str:
+        return f"{pair.coin0.symbol}{pair.coin1.symbol}"

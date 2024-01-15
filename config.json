@@ -1,8 +1,10 @@
 {
+  "funds": 1,
   "exchanges": {
     "mexc": {
       "api_key": "mx0vglT2eeOimCH3Sg",
       "api_secret": "d3a4cca0e9b043b99b6a6f5a32286fa9"
     }
-  }
+  },
+  "scheduling_timeout_seconds": 1.5
 }
