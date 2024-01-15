@@ -1,0 +1,137 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: "Inter", sans-serif;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+main {
+    display: grid;
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 4rem;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+h2 {
+    margin: 0;
+}
+
+.active-exchanges-heading {
+    margin-top: 3rem;
+}
+
+.divider {
+    height: 1px;
+    width: 100%;
+    background-color: #E1E1E1;
+}
+
+.active-exchanges-area {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 20px;
+}
+
+.active-exchanges-area > div {
+    width: 200px;
+    background-color: #3D3D3D;
+    border-radius: 5px;
+}
+
+.add-exchange-card {
+    background-color: #FFFFFF !important;
+    border: 2px dashed #3D3D3D;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.add-exchange-card > img {
+    width: 32px;
+    height: 32px;
+}
+
+.active-exchange-card {
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    background-color: #3D3D3D;
+    column-gap: 0.5rem;
+}
+
+.active-exchange-card-logo-area {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+.active-exchange-card-logo {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+.active-exchange-card-logo > img {
+    width: 70%;
+    height: 70%;
+}
+
+.active-exchange-card-content {
+    display: grid;
+}
+
+.active-exchange-card-content h2 {
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+.active-exchange-card-content-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.active-exchange-card-content-header img {
+    width: 20px;
+    justify-self: end;
+    cursor: pointer;
+}
+
+.active-exchange-card-content-actions {
+    align-self: end;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    align-items: end;
+}
+
+.active-exchange-card-content-actions img {
+    width: 24px;
+    cursor: pointer;
+    margin-left: -0.25rem;
+}
+
+.play-icon {
+    margin-left: -0.5rem !important;
+}
+
+@keyframes pop{
+  50%  {transform: scale(1.2);}
+}
