@@ -12,6 +12,11 @@ class ExchangeConnector:
         self.api_secret = api_secret
 
     @abc.abstractmethod
+    def get_connector_name(self) -> str:
+        """Returns the connector name e.g. MEXC, Kucoin, ..."""
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_formatted_pair_str(self, pair: Pair) -> str:
         """Returns a formatted pair string e.g. BTC/USDT, BTC-USDT, ..."""
         raise NotImplementedError

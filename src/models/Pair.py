@@ -9,4 +9,4 @@ class Pair:
         self.tradable = tradable
 
     def __str__(self):
-        return f"{self.coin0.symbol}/{self.coin1.symbol} - Tradable: {str(self.tradable)}"
+        return f"{self.coin0.symbol}/{self.coin1.symbol}"
