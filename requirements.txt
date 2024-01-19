@@ -1,2 +1,4 @@
 ccxt
 requests
+flask
+flask-cors
