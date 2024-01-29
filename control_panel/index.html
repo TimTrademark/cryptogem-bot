@@ -8,33 +8,49 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" type="image/png" href="../images/favicon.png"/>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="images/favicon.png"/>
 </head>
 <body>
 <main>
-    <img src="../images/logo.png" alt="my crypto gem logo">
+    <img src="images/logo.png" alt="my crypto gem logo">
     <h1 class="active-exchanges-heading">Active Exchanges</h1>
     <div class="divider"></div>
-    <div class="active-exchanges-area">
-        <div class="active-exchange-card">
-            <div class="active-exchange-card-logo-area">
-                <div class="active-exchange-card-logo"><img src="../images/mexc_logo.png" alt="exchange logo"></div>
+    <div id="active-exchanges" class="active-exchanges-area">
 
-            </div>
-            <div class="active-exchange-card-content">
-                <div class="active-exchange-card-content-header"><h2>MEXC</h2><img src="../images/delete.png"
-                                                                                   alt="delete icon"></div>
-                <div class="active-exchange-card-content-actions"><img src="../images/pause.png"
-                                                                       alt="pause icon"><img class="play-icon"
-                                                                                             src="../images/play.png"
-                                                                                             alt="play icon"></div>
-            </div>
-
-        </div>
-        <div id="add" class="add-exchange-card"><img src="../images/gridicons_add.png" alt="add-icon"></div>
     </div>
 </main>
-<script src="index.js"></script>
+<div class="modal fade" id="add-exchange-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Add Exchange</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <select id="exchanges-select" class="form-select form-select-lg mb-3" aria-label="exchange select">
+                    <option disabled selected>Exchange</option>
+                </select>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInputApiKey" placeholder="Api Key">
+                    <label for="floatingInputApiKey">Api Key</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInputApiSecret" placeholder="Api Secret">
+                    <label for="floatingInputApiSecret">Api Secret</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="add-exchange-btn" type="button" class="btn btn-dark bg-dark">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 </body>
 </html>

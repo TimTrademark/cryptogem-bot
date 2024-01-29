@@ -1,3 +1,7 @@
+:root {
+    --color-dark: #3D3D3D;
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -42,23 +46,26 @@ h2 {
 .active-exchanges-area {
     margin-top: 2rem;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 200px 200px 200px 200px;
     column-gap: 20px;
+    row-gap: 20px;
 }
 
 .active-exchanges-area > div {
     width: 200px;
-    background-color: #3D3D3D;
+    background-color: var(--color-dark);
     border-radius: 5px;
 }
 
 .add-exchange-card {
     background-color: #FFFFFF !important;
-    border: 2px dashed #3D3D3D;
+    border: 2px dashed var(--color-dark);
     display: grid;
     justify-items: center;
     align-items: center;
     cursor: pointer;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .add-exchange-card > img {
@@ -70,7 +77,7 @@ h2 {
     padding: 1rem;
     display: grid;
     grid-template-columns: 1fr 2fr;
-    background-color: #3D3D3D;
+    background-color: var(--color-dark);
     column-gap: 0.5rem;
 }
 
@@ -132,6 +139,32 @@ h2 {
     margin-left: -0.5rem !important;
 }
 
+.delete-btn {
+    cursor: pointer;
+}
+
+.bg-dark {
+    background-color: var(--color-dark);
+}
+
 @keyframes pop{
-  50%  {transform: scale(1.2);}
+  50%  {transform: scale(1.03);}
+}
+
+@media only screen and (max-width: 900px) {
+    .active-exchanges-area {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .active-exchanges-area {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .active-exchanges-area {
+        grid-template-columns: 1fr;
+    }
 }

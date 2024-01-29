@@ -1,0 +1,12 @@
+{
+  "exchanges": {
+    "mexc": {
+      "img": "mexc_logo.png",
+      "title": "MEXC"
+    },
+    "kucoin": {
+      "img": "kucoin_logo.png",
+      "title": "Kucoin"
+    }
+  }
+}

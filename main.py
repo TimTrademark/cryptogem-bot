@@ -1,19 +1,35 @@
 import time
 from typing import List, Dict
 
+from flask import Flask
+from flask_cors import CORS
+
+from src.api import ConfigController
+from src.api.ControlPanelController import ControlPanelController
 from src.config.Config import Config
 from src.connectors.ConnectorFactory import ConnectorFactory
 from src.connectors.ExchangeConnector import ExchangeConnector
 from src.models.Pair import Pair
 from src.utils.PairUtils import PairUtils
 
+app = Flask(__name__, template_folder='control_panel', static_url_path='',
+            static_folder='control_panel/static', )
+app.add_url_rule('/', view_func=ControlPanelController.index, methods=["GET"])
+app.register_blueprint(ConfigController.bp)
+CORS(app)
+
 
 def main():
+    app.run()
+    return
     config = Config()
     connectors: List[ExchangeConnector] = get_connectors(config)
     last_non_tradable: Dict[str, List[Pair]] = init_last_non_tradable(connectors)
     while True:
         for connector in connectors:
+            ec: ExchangeConfig = config.get_exchange_config_by_name(connector.get_connector_name())
+            if not ec.active:
+                continue
             latest_pairs = connector.get_latest_pairs()
             compare_latest_pairs_and_trade(connector, latest_pairs, config.funds,
                                            last_non_tradable[connector.get_connector_name().lower()])
