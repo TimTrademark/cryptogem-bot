@@ -23,7 +23,6 @@ class MEXCConnector(ExchangeConnector):
         self.mexc.create_order(self.get_formatted_pair_str(pair), "market", "buy", None, None, {
             "quoteOrderQty": funds,
         })
-        self.mexc.create_market_buy_order(self.get_formatted_pair_str(pair))
 
     def get_latest_pairs(self) -> List[Pair]:
         res = requests.get("https://www.mexc.com/api/platform/spot/market-v2/web/coin/new/list")
