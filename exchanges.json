@@ -2,11 +2,13 @@
   "exchanges": {
     "mexc": {
       "img": "mexc_logo.png",
-      "title": "MEXC"
+      "title": "MEXC",
+      "min_funds": 5
     },
     "kucoin": {
       "img": "kucoin_logo.png",
-      "title": "Kucoin"
+      "title": "Kucoin",
+      "min_funds": 1
     }
   }
 }

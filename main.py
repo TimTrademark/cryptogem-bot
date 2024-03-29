@@ -9,6 +9,7 @@ from src.api.ControlPanelController import ControlPanelController
 from src.config.Config import Config
 from src.connectors.ConnectorFactory import ConnectorFactory
 from src.connectors.ExchangeConnector import ExchangeConnector
+from src.models.ExchangeConfig import ExchangeConfig
 from src.models.Pair import Pair
 from src.utils.PairUtils import PairUtils
 
@@ -21,7 +22,6 @@ CORS(app)
 
 def main():
     app.run()
-    return
     config = Config()
     connectors: List[ExchangeConnector] = get_connectors(config)
     last_non_tradable: Dict[str, List[Pair]] = init_last_non_tradable(connectors)
@@ -31,7 +31,7 @@ def main():
             if not ec.active:
                 continue
             latest_pairs = connector.get_latest_pairs()
-            compare_latest_pairs_and_trade(connector, latest_pairs, config.funds,
+            compare_latest_pairs_and_trade(connector, latest_pairs, ec.funds,
                                            last_non_tradable[connector.get_connector_name().lower()])
             last_non_tradable[connector.get_connector_name().lower()] = PairUtils.filter_non_tradable_pairs(
                 latest_pairs)

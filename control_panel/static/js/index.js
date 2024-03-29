@@ -12,15 +12,16 @@ async function getExchangesNotConfigured() {
     return await res.json();
 }
 
-async function addExchangeConfig(name, api_key, api_secret) {
+async function addExchangeConfig(name, api_key, api_secret, funds) {
     const res = await fetch(baseUrl + "/add-exchange-config", {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({name, api_key, api_secret})
+    body: JSON.stringify({name, api_key, api_secret, funds})
   });
+  return await res.json();
 }
 
 async function deleteExchangeConfig(name) {
@@ -81,7 +82,10 @@ async function init() {
     const exchanges_select = document.getElementById("exchanges-select");
     for(let i = 0; i < exchanges_not_configured.length; i++) {
         const exchange = exchanges_not_configured[i];
-        exchanges_select.innerHTML += `<option value="${exchange['name']}">${exchange["title"]}</option>`;
+        exchanges_select.innerHTML += `<option id="option-${exchange['name']}" data-min-funds="${exchange['min_funds']}" value="${exchange['name']}">${exchange["title"]}</option>`;
+    }
+    exchanges_select.onchange = (e) => {
+        document.getElementById('min-funds-hint').innerText = `Minimum trade funds for ${e.target.value} is ${e.target.options[e.target.selectedIndex].dataset.minFunds} USDT`;
     }
 
 }
@@ -92,10 +96,20 @@ add_exchange_btn.onclick = async () => {
     if(name.toLowerCase() === "exchange") return;
     const api_key = document.getElementById("floatingInputApiKey").value;
     const api_secret = document.getElementById("floatingInputApiSecret").value;
-    await addExchangeConfig(name, api_key, api_secret);
-    document.getElementsByClassName("modal-backdrop")[0].remove();
-    document.getElementById("add-exchange-modal").classList.remove("show");
-    await init();
+    const funds = document.getElementById("floatingInputFunds").value;
+    const res = await addExchangeConfig(name, api_key, api_secret, funds);
+    if(res.success == 'false') {
+        const mainElement = document.getElementById('main');
+        mainElement.innerHTML = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+          ${res.message}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>${mainElement.innerHTML}`;
+    } else {
+        await init();
+        document.getElementById(`option-${name}`).remove();
+    }
+    document.getElementById("dismiss-modal").click();
+
 }
 
 init();

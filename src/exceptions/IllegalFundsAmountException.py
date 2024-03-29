@@ -1,0 +1,2 @@
+class IllegalFundsAmountException(Exception):
+    pass
