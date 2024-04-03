@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Crypto Gem</title>
+    <title>Control Panel - My Crypto Gem</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -15,13 +15,58 @@
 </head>
 <body>
 <main id="main">
-    <img src="images/logo.png" alt="my crypto gem logo">
-    <h1 class="active-exchanges-heading">Active Exchanges</h1>
-    <div class="divider"></div>
-    <div id="active-exchanges" class="active-exchanges-area">
+    <div class="header shadow-sm">
+        <div class="header-content">
+            <div class="logo">💎 My Crypto Gem</div>
+            <div class="header-nav"><a href="https://mycryptogem.com" target="_blank" class="header-nav-link">mycryptogem.com
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-up-right" width="44"
+                     height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
+                     stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M17 7l-10 10"/>
+                    <path d="M8 7l9 0l0 9"/>
+                </svg>
+            </a></div>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="content">
+            <h1 class="active-exchanges-heading">Exchanges</h1>
+            <div class="divider"></div>
+            <div id="active-exchanges" class="active-exchanges-area">
+            </div>
+        </div>
+
 
     </div>
 </main>
+<footer>
+    <div class="footnote">Made with ❤️</div>
+    <div class="socials">
+        <a href="https://github.com/TimTrademark/cryptogem-bot" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="18"
+                 height="18" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/>
+            </svg>
+        </a>
+        <a href="https://medium.com/@tim.truyens56" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="icon icon-tabler icons-tabler-outline icon-tabler-brand-medium">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"/>
+                <path d="M8 9h1l3 3l3 -3h1"/>
+                <path d="M8 15l2 0"/>
+                <path d="M14 15l2 0"/>
+                <path d="M9 9l0 6"/>
+                <path d="M15 9l0 6"/>
+            </svg>
+        </a>
+
+    </div>
+</footer>
 <div class="modal fade" id="add-exchange-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -36,11 +81,11 @@
                 </select>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="floatingInputApiKey" placeholder="Api Key">
-                    <label for="floatingInputApiKey">Api Key</label>
+                    <label for="floatingInputApiKey">API Key</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="floatingInputApiSecret" placeholder="Api Secret">
-                    <label for="floatingInputApiSecret">Api Secret</label>
+                    <label for="floatingInputApiSecret">API Secret</label>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="floatingInputFunds" placeholder="10">

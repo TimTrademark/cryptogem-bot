@@ -1,1 +1,1 @@
-{"exchanges": {"mexc": {"api_key": "mx0vglT2eeOimCH3Sg", "api_secret": "d3a4cca0e9b043b99b6a6f5a32286fa9", "active": false, "funds": 5}}, "scheduling_timeout_seconds": 1.5}
+{"exchanges": {"mexc": {"api_key": "mx0vglT2eeOimCH3Sg", "api_secret": "d3a4cca0e9b043b99b6a6f5a32286fa9", "active": false, "funds": 5}, "kucoin": {"api_key": "aa", "api_secret": "aa", "funds": 1.0, "active": false}}, "scheduling_timeout_seconds": 1.5}
