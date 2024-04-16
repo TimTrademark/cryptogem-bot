@@ -1,5 +1,7 @@
 :root {
-    --color-dark: #3D3D3D;
+    --primary-color: #0161EF;
+    --bg-gray: #FAFAFA;
+    --color-dark: #242424;
 }
 
 html, body {
@@ -7,6 +9,11 @@ html, body {
     padding: 0;
     width: 100%;
     font-family: "Inter", sans-serif;
+}
+
+body {
+    border-top: 3px solid var(--primary-color);
+    background-color: var(--bg-gray) !important;
 }
 
 img {
@@ -18,23 +25,95 @@ img {
 }
 
 main {
+    position: relative;
     display: grid;
-    width: 60%;
-    margin-left: 20%;
-    margin-top: 4rem;
+    grid-template-columns: 1fr;
+    
 }
 
-h1 {
+.header {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+    padding-left: 20%;
+    padding-right: 20%;
+    background-color: #FFF;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+    height: 54px;
+    padding-left: 20%;
+    padding-right: 20%;
+    background-color: #FFF;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    font-size: 14px;
+    align-items: center;
+}
+
+.footnote {
+    color: #5D5D5D;
+}
+
+.socials {
+    display: flex;
+    justify-content: end;
+}
+
+.socials a {
+    color: var(--color-dark);
+}
+
+.header-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.logo {
+    color: 242424;
     font-weight: bold;
     font-size: 24px;
+}
+
+.header-nav {
+    justify-self: end;
+}
+
+.header-nav-link {
+    font-size: 18px;
+    color: #5D5D5D;
+}
+
+.icon-tabler-arrow-up-right {
+    height: 1rem;
+    width: 1rem;
+    margin-left: -0.05rem;
+    margin-top: -0.2rem;
 }
 
 h2 {
     margin: 0;
 }
 
+.content-wrapper {
+    width: 100%;
+    display: grid;
+    justify-content: center;
+}
+
+.content {
+    width: 860px;
+}
+
 .active-exchanges-heading {
-    margin-top: 3rem;
+    margin-top: 1.2rem;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .divider {
@@ -44,21 +123,20 @@ h2 {
 }
 
 .active-exchanges-area {
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: grid;
-    grid-template-columns: 200px 200px 200px 200px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 20px;
     row-gap: 20px;
 }
 
 .active-exchanges-area > div {
     width: 200px;
-    background-color: var(--color-dark);
     border-radius: 5px;
 }
 
 .add-exchange-card {
-    background-color: #FFFFFF !important;
+    background-color: #FAFAFA !important;
     border: 2px dashed var(--color-dark);
     display: grid;
     justify-items: center;
@@ -66,6 +144,7 @@ h2 {
     cursor: pointer;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    height: 90px;
 }
 
 .add-exchange-card > img {
@@ -77,8 +156,9 @@ h2 {
     padding: 1rem;
     display: grid;
     grid-template-columns: 1fr 2fr;
-    background-color: var(--color-dark);
+    background-color: var(--primary-color);
     column-gap: 0.5rem;
+    height: 90px;
 }
 
 .active-exchange-card-logo-area {
@@ -91,15 +171,15 @@ h2 {
     width: 55px;
     height: 55px;
     border-radius: 50%;
-    background-color: #FFFFFF;
+    background-color: var(--bg-gray);
     display: grid;
     align-items: center;
     justify-items: center;
 }
 
 .active-exchange-card-logo > img {
-    width: 70%;
-    height: 70%;
+    width: 60%;
+    height: 60%;
 }
 
 .active-exchange-card-content {
@@ -108,7 +188,7 @@ h2 {
 
 .active-exchange-card-content h2 {
     color: #FFFFFF;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .active-exchange-card-content-header {
@@ -151,20 +231,33 @@ h2 {
   50%  {transform: scale(1.03);}
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1060px) {
     .active-exchanges-area {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 200px 200px 200px;
     }
+
+    .content {
+        width: 640px;
+    }
+
 }
 
 @media only screen and (max-width: 750px) {
     .active-exchanges-area {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 200px 200px;
+    }
+
+    .content {
+        width: 420px;
     }
 }
 
 @media only screen and (max-width: 550px) {
     .active-exchanges-area {
-        grid-template-columns: 1fr;
+        grid-template-columns: 200px;
+    }
+
+    .content {
+        width: 200px;
     }
 }
