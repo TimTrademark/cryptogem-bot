@@ -2,12 +2,14 @@ import json
 from typing import Dict, List
 
 from src.api.dto.ExchangeDto import ExchangeDto
+from src.config.ConfigLoader import ConfigLoader
 from src.exceptions.IllegalFundsAmountException import IllegalFundsAmountException
 
 
 class ExchangeConfigManager:
 
-    def __init__(self):
+    def __init__(self, config_loader: ConfigLoader):
+        self.subscriber = config_loader
         self.exchanges: Dict[str, Dict[str]] = {}
         with open("exchanges.json", 'r') as f:
             content = f.read()
@@ -50,6 +52,7 @@ class ExchangeConfigManager:
                                               "funds": funds,
                                               "active": True}
             f.write(json.dumps(json_config))
+        self.subscriber.update()
 
     def delete_exchange_config(self, name: str):
         with open("config.json", 'r') as f:
@@ -58,6 +61,7 @@ class ExchangeConfigManager:
             json_config = json.loads(content)
             del json_config["exchanges"][name]
             f.write(json.dumps(json_config))
+        self.subscriber.update()
 
     def toggle_active(self, name: str):
         with open("config.json", 'r') as f:
@@ -66,3 +70,4 @@ class ExchangeConfigManager:
             json_config = json.loads(content)
             json_config["exchanges"][name]["active"] = not json_config["exchanges"][name]["active"]
             f.write(json.dumps(json_config))
+        self.subscriber.update()

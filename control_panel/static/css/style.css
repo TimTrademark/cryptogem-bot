@@ -35,8 +35,8 @@ main {
     padding-top: 20px;
     padding-bottom: 20px;
     width: 100%;
-    padding-left: 20%;
-    padding-right: 20%;
+    display: grid;
+    justify-content: center;
     background-color: #FFF;
 }
 
@@ -51,9 +51,15 @@ footer {
     padding-right: 20%;
     background-color: #FFF;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    justify-content: center;
     font-size: 14px;
     align-items: center;
+}
+
+.footer-content {
+    width: 860px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
 
 .footnote {
@@ -72,10 +78,11 @@ footer {
 .header-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    width: 860px;
 }
 
 .logo {
-    color: 242424;
+    color: #242424;
     font-weight: bold;
     font-size: 24px;
 }
@@ -236,6 +243,14 @@ h2 {
         grid-template-columns: 200px 200px 200px;
     }
 
+    .header-content {
+        width: 640px;
+    }
+
+    .footer-content {
+        width: 640px;
+    }
+
     .content {
         width: 640px;
     }
@@ -247,6 +262,14 @@ h2 {
         grid-template-columns: 200px 200px;
     }
 
+    .header-content {
+        width: 420px;
+    }
+
+    .footer-content {
+        width: 420px;
+    }
+
     .content {
         width: 420px;
     }
@@ -255,6 +278,20 @@ h2 {
 @media only screen and (max-width: 550px) {
     .active-exchanges-area {
         grid-template-columns: 200px;
+    }
+
+    .header-content {
+        width: 200px;
+        grid-template-columns: 150px 50px;
+    }
+
+    .footer-content {
+        width: 200px;
+        grid-template-columns: 150px 50px;
+    }
+
+    .logo {
+        font-size: 18px;
     }
 
     .content {
