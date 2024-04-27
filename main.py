@@ -1,13 +1,18 @@
+import logging
+import os
+import threading
 import time
+from os.path import join, dirname
 from typing import List, Dict
 
+from dotenv import load_dotenv
 from flask import Flask
 from flask_cors import CORS
 
 from src.api import ConfigController
 from src.api.ControlPanelController import ControlPanelController
-from src.config.Config import Config
-from src.connectors.ConnectorFactory import ConnectorFactory
+from src.config.ConfigLoader import ConfigLoader
+from src.config.ExchangeConfigManager import ExchangeConfigManager
 from src.connectors.ExchangeConnector import ExchangeConnector
 from src.models.ExchangeConfig import ExchangeConfig
 from src.models.Pair import Pair
@@ -17,32 +22,43 @@ app = Flask(__name__, template_folder='control_panel', static_url_path='',
             static_folder='control_panel/static', )
 app.add_url_rule('/', view_func=ControlPanelController.index, methods=["GET"])
 app.register_blueprint(ConfigController.bp)
+app.debug = False
 CORS(app)
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+port = os.environ.get("CONTROL_PANEL_PORT")
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 
 def main():
-    app.run()
-    config = Config()
-    connectors: List[ExchangeConnector] = get_connectors(config)
+    print("Starting control panel")
+    config_loader = ConfigLoader()
+    threading.Thread(target=lambda: start_flask(config_loader), daemon=True).start()
+    config = config_loader.config
+    connectors: List[ExchangeConnector] = config_loader.connectors
     last_non_tradable: Dict[str, List[Pair]] = init_last_non_tradable(connectors)
     while True:
-        for connector in connectors:
-            ec: ExchangeConfig = config.get_exchange_config_by_name(connector.get_connector_name())
-            if not ec.active:
-                continue
-            latest_pairs = connector.get_latest_pairs()
-            compare_latest_pairs_and_trade(connector, latest_pairs, ec.funds,
-                                           last_non_tradable[connector.get_connector_name().lower()])
-            last_non_tradable[connector.get_connector_name().lower()] = PairUtils.filter_non_tradable_pairs(
-                latest_pairs)
+        try:
+            config = config_loader.config
+            connectors: List[ExchangeConnector] = config_loader.connectors
+            for connector in connectors:
+                ec: ExchangeConfig = config.get_exchange_config_by_name(connector.get_connector_name())
+                if not ec.active:
+                    continue
+                latest_pairs = connector.get_latest_pairs()
+                compare_latest_pairs_and_trade(connector, latest_pairs, ec.funds,
+                                               last_non_tradable[connector.get_connector_name().lower()])
+                last_non_tradable[connector.get_connector_name().lower()] = PairUtils.filter_non_tradable_pairs(
+                    latest_pairs)
+        except RuntimeError as e:
+            print(e)
         time.sleep(config.scheduling_timeout_seconds)
 
 
-def get_connectors(config: Config):
-    connectors: List[ExchangeConnector] = []
-    for e in config.exchange_configs:
-        connectors.append(ConnectorFactory.make_connector(e.name, e.api_key, e.api_secret))
-    return connectors
+def start_flask(config_loader: ConfigLoader):
+    app.config["config_manager"] = ExchangeConfigManager(config_loader)
+    app.run(host="0.0.0.0", port=port or 5000)
 
 
 def init_last_non_tradable(connectors: List[ExchangeConnector]):
