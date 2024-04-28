@@ -16,6 +16,7 @@ from src.config.ExchangeConfigManager import ExchangeConfigManager
 from src.connectors.ExchangeConnector import ExchangeConnector
 from src.models.ExchangeConfig import ExchangeConfig
 from src.models.Pair import Pair
+from src.utils.BrandingUtils import get_logo_ascii_art
 from src.utils.PairUtils import PairUtils
 
 app = Flask(__name__, template_folder='control_panel', static_url_path='',
@@ -27,17 +28,22 @@ CORS(app)
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 port = os.environ.get("CONTROL_PANEL_PORT")
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
+logging.basicConfig(format='[%(asctime)s] - %(message)s', datefmt='%d-%m-%y %H:%M', level=logging.INFO)
+flaskLogger = logging.getLogger('werkzeug')
+flaskLogger.setLevel(logging.ERROR)
+logger = logging.getLogger("mycryptogem")
+logger.setLevel(logging.INFO)
 
 
 def main():
-    print("Starting control panel")
+    print(get_logo_ascii_art())
     config_loader = ConfigLoader()
     threading.Thread(target=lambda: start_flask(config_loader), daemon=True).start()
+    logger.info("Started control panel")
     config = config_loader.config
     connectors: List[ExchangeConnector] = config_loader.connectors
     last_non_tradable: Dict[str, List[Pair]] = init_last_non_tradable(connectors)
+    logger.info("Started scanning exchanges")
     while True:
         try:
             config = config_loader.config
@@ -70,11 +76,11 @@ def init_last_non_tradable(connectors: List[ExchangeConnector]):
 
 def compare_latest_pairs_and_trade(connector: ExchangeConnector, latest_pairs: List[Pair], funds: float,
                                    last_non_tradable: List[Pair]):
-    print("Latest pairs:")
-    print(list(map(lambda lp: str(lp), latest_pairs)))
+    logger.debug("Latest pairs:")
+    logger.debug(list(map(lambda lp: str(lp), latest_pairs)))
     for p in latest_pairs:
         if p.tradable and PairUtils.pair_exists_in_list(last_non_tradable, p):
-            print(f"{str(p)} has opened trading, buying coin...")
+            logger.info(f"{str(p)} has opened trading on {connector.get_connector_name()}, buying coin...")
             buy(p, funds, connector)
 
 
