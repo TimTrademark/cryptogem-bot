@@ -3,3 +3,4 @@ requests
 flask
 flask-cors
 python-dotenv
+GitPython
