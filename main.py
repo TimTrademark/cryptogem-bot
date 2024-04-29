@@ -18,6 +18,7 @@ from src.models.ExchangeConfig import ExchangeConfig
 from src.models.Pair import Pair
 from src.utils.BrandingUtils import get_logo_ascii_art
 from src.utils.PairUtils import PairUtils
+from src.utils.VersionUtils import read_version
 
 app = Flask(__name__, template_folder='control_panel', static_url_path='',
             static_folder='control_panel/static', )
@@ -37,6 +38,7 @@ logger.setLevel(logging.INFO)
 
 def main():
     print(get_logo_ascii_art())
+    print(f"v{read_version()}")
     config_loader = ConfigLoader()
     threading.Thread(target=lambda: start_flask(config_loader), daemon=True).start()
     logger.info("Started control panel")
