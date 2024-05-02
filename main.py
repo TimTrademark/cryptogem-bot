@@ -44,7 +44,7 @@ def main():
     logger.info("Started control panel")
     config = config_loader.config
     connectors: List[ExchangeConnector] = config_loader.connectors
-    last_non_tradable: Dict[str, List[Pair]] = init_last_non_tradable(connectors)
+    last_non_tradable: Dict[str, List[Pair]] = {}
     logger.info("Started scanning exchanges")
     while True:
         try:
@@ -55,10 +55,10 @@ def main():
                 if not ec.active:
                     continue
                 latest_pairs = connector.get_latest_pairs()
-                compare_latest_pairs_and_trade(connector, latest_pairs, ec.funds,
-                                               last_non_tradable[connector.get_connector_name().lower()])
                 last_non_tradable[connector.get_connector_name().lower()] = PairUtils.filter_non_tradable_pairs(
                     latest_pairs)
+                compare_latest_pairs_and_trade(connector, latest_pairs, ec.funds,
+                                               last_non_tradable[connector.get_connector_name().lower()])
         except RuntimeError as e:
             print(e)
         time.sleep(config.scheduling_timeout_seconds)
@@ -67,13 +67,6 @@ def main():
 def start_flask(config_loader: ConfigLoader):
     app.config["config_manager"] = ExchangeConfigManager(config_loader)
     app.run(host="0.0.0.0", port=port or 5000)
-
-
-def init_last_non_tradable(connectors: List[ExchangeConnector]):
-    last_non_tradable: Dict[str, List[Pair]] = {}
-    for c in connectors:
-        last_non_tradable[c.get_connector_name().lower()] = PairUtils.filter_non_tradable_pairs(c.get_latest_pairs())
-    return last_non_tradable
 
 
 def compare_latest_pairs_and_trade(connector: ExchangeConnector, latest_pairs: List[Pair], funds: float,
