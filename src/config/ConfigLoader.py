@@ -1,8 +1,11 @@
-from typing import List
+import logging
+from typing import List, Callable
 
 from src.config.Config import Config
 from src.connectors.ConnectorFactory import ConnectorFactory
 from src.connectors.ExchangeConnector import ExchangeConnector
+
+logger = logging.getLogger("mycryptogem")
 
 
 class ConfigLoader:
@@ -10,9 +13,17 @@ class ConfigLoader:
     def __init__(self):
         self.config = Config()
         self.connectors = self.get_connectors(self.config)
+        self.add_callbacks = []
 
-    def update(self):
-        print("Updating config")
+    def append_add_callback(self, callback: Callable):
+        self.add_callbacks.append(callback)
+
+    def on_add(self):
+        for c in self.add_callbacks:
+            c()
+
+    def on_update(self):
+        logger.info("Updating config")
         self.config = Config()
         self.connectors = self.get_connectors(self.config)
 
