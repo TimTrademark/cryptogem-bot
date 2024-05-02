@@ -43,7 +43,6 @@ def main():
     threading.Thread(target=lambda: start_flask(config_loader), daemon=True).start()
     logger.info("Started control panel")
     config = config_loader.config
-    connectors: List[ExchangeConnector] = config_loader.connectors
     last_non_tradable: Dict[str, List[Pair]] = {}
     logger.info("Started scanning exchanges")
     while True:
@@ -59,7 +58,7 @@ def main():
                     latest_pairs)
                 compare_latest_pairs_and_trade(connector, latest_pairs, ec.funds,
                                                last_non_tradable[connector.get_connector_name().lower()])
-        except RuntimeError as e:
+        except Exception as e:
             print(e)
         time.sleep(config.scheduling_timeout_seconds)
 
