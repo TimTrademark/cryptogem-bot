@@ -40,10 +40,14 @@ def main():
     print(get_logo_ascii_art())
     print(f"v{read_version()}")
     config_loader = ConfigLoader()
-    threading.Thread(target=lambda: start_flask(config_loader), daemon=True).start()
-    logger.info("Started control panel")
     config = config_loader.config
     last_non_tradable: Dict[str, List[Pair]] = {}
+    if os.environ.get("ENABLE_CONTROL_PANEL") is not None and os.environ.get("ENABLE_CONTROL_PANEL").upper() == 'TRUE':
+        threading.Thread(target=lambda: start_flask(config_loader), daemon=True).start()
+    logger.info("Started control panel")
+    logger.info("Initializing exchanges...")
+    init_last_non_tradable(config_loader.connectors, last_non_tradable)
+    config_loader.append_add_callback(lambda: init_last_non_tradable(config_loader.connectors, last_non_tradable))
     logger.info("Started scanning exchanges")
     while True:
         try:
@@ -54,13 +58,19 @@ def main():
                 if not ec.active:
                     continue
                 latest_pairs = connector.get_latest_pairs()
-                last_non_tradable[connector.get_connector_name().lower()] = PairUtils.filter_non_tradable_pairs(
-                    latest_pairs)
                 compare_latest_pairs_and_trade(connector, latest_pairs, ec.funds,
                                                last_non_tradable[connector.get_connector_name().lower()])
+                last_non_tradable[connector.get_connector_name().lower()] = PairUtils.filter_non_tradable_pairs(
+                    latest_pairs)
+
         except Exception as e:
             print(e)
         time.sleep(config.scheduling_timeout_seconds)
+
+
+def init_last_non_tradable(connectors: List[ExchangeConnector], last_non_tradable: Dict[str, List[Pair]]):
+    for c in connectors:
+        last_non_tradable[c.get_connector_name().lower()] = PairUtils.filter_non_tradable_pairs(c.get_latest_pairs())
 
 
 def start_flask(config_loader: ConfigLoader):

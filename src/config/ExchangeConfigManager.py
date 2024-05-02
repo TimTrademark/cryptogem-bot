@@ -52,7 +52,8 @@ class ExchangeConfigManager:
                                               "funds": funds,
                                               "active": True}
             f.write(json.dumps(json_config))
-        self.subscriber.update()
+        self.subscriber.on_update()
+        self.subscriber.on_add()
 
     def delete_exchange_config(self, name: str):
         with open("config.json", 'r') as f:
@@ -61,7 +62,7 @@ class ExchangeConfigManager:
             json_config = json.loads(content)
             del json_config["exchanges"][name]
             f.write(json.dumps(json_config))
-        self.subscriber.update()
+        self.subscriber.on_update()
 
     def toggle_active(self, name: str):
         with open("config.json", 'r') as f:
@@ -70,4 +71,4 @@ class ExchangeConfigManager:
             json_config = json.loads(content)
             json_config["exchanges"][name]["active"] = not json_config["exchanges"][name]["active"]
             f.write(json.dumps(json_config))
-        self.subscriber.update()
+        self.subscriber.on_update()
