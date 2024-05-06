@@ -1,9 +1,9 @@
+import math
+import time
 from typing import List
 
 import ccxt
 import requests
-import time
-import math
 
 from src.connectors.ExchangeConnector import ExchangeConnector
 from src.models.Coin import Coin
@@ -22,15 +22,9 @@ class MEXCConnector(ExchangeConnector):
         return "MEXC"
 
     def execute_buy_order(self, pair: Pair, funds: float):
-        self.mexc.create_order(
+        self.mexc.create_market_buy_order_with_cost(
             self.get_formatted_pair_str(pair),
-            "market",
-            "buy",
-            None,
-            None,
-            {
-                "quoteOrderQty": funds,
-            },
+            funds
         )
 
     def get_latest_pairs(self) -> List[Pair]:
