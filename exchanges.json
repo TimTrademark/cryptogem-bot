@@ -3,12 +3,12 @@
     "mexc": {
       "img": "mexc_logo.png",
       "title": "MEXC",
-      "min_funds": 5
+      "min_funds": 5.01
     },
     "kucoin": {
       "img": "kucoin_logo.png",
       "title": "Kucoin",
-      "min_funds": 1
+      "min_funds": 1.01
     }
   }
 }

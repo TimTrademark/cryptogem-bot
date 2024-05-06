@@ -49,8 +49,8 @@ def main():
     config = config_loader.config
     last_non_tradable: Dict[str, List[Pair]] = {}
     if (
-        os.environ.get("ENABLE_CONTROL_PANEL") is not None
-        and os.environ.get("ENABLE_CONTROL_PANEL").upper() == "TRUE"
+            os.environ.get("ENABLE_CONTROL_PANEL") is not None
+            and os.environ.get("ENABLE_CONTROL_PANEL").upper() == "TRUE"
     ):
         threading.Thread(target=lambda: start_flask(config_loader), daemon=True).start()
     logger.info("Started control panel")
@@ -87,7 +87,7 @@ def main():
 
 
 def init_last_non_tradable(
-    connectors: List[ExchangeConnector], last_non_tradable: Dict[str, List[Pair]]
+        connectors: List[ExchangeConnector], last_non_tradable: Dict[str, List[Pair]]
 ):
     for c in connectors:
         last_non_tradable[c.get_connector_name().lower()] = (
@@ -101,10 +101,10 @@ def start_flask(config_loader: ConfigLoader):
 
 
 def compare_latest_pairs_and_trade(
-    connector: ExchangeConnector,
-    latest_pairs: List[Pair],
-    funds: float,
-    last_non_tradable: List[Pair],
+        connector: ExchangeConnector,
+        latest_pairs: List[Pair],
+        funds: float,
+        last_non_tradable: List[Pair],
 ):
     logger.debug("Latest pairs:")
     logger.debug(list(map(lambda lp: str(lp), latest_pairs)))
