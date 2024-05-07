@@ -57,6 +57,9 @@ async function init() {
     for(let i = 0; i < exchanges_configured.length; i++) {
         const exchange = exchanges_configured[i];
         area.innerHTML = getExchangeCardHTML(exchange["title"], exchange["img"], exchange["active"]) + area.innerHTML;
+    }
+    for(let i = 0; i < exchanges_configured.length; i++) {
+    const exchange = exchanges_configured[i];
         const delete_icon = document.getElementById(exchange["title"]).querySelector(`#${exchange["title"]}-delete`);
         delete_icon.onclick = async () => {
             await deleteExchangeConfig(exchange["title"]);
