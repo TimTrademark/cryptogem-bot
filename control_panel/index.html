@@ -77,9 +77,8 @@
                 <button id="dismiss-modal" type="button" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div id="modal-form" class="modal-body">
                 <select id="exchanges-select" class="form-select form-select-lg mb-3" aria-label="exchange select">
-                    <option disabled selected>Exchange</option>
                 </select>
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" id="floatingInputApiKey" placeholder="Api Key">
@@ -94,6 +93,8 @@
                     <label for="floatingInputFunds">Trading funds (in USDT)</label>
                     <div class="form-text ms-1" id="min-funds-hint">
                     </div>
+                </div>
+                <div id="form-extra-args" class="form-floating mb-3">
                 </div>
             </div>
             <div class="modal-footer">

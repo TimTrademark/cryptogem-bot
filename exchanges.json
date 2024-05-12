@@ -8,7 +8,10 @@
     "kucoin": {
       "img": "kucoin_logo.png",
       "title": "Kucoin",
-      "min_funds": 1.01
+      "min_funds": 1.01,
+      "extra_args": [
+        "passphrase"
+      ]
     }
   }
 }

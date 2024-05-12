@@ -1,6 +1,6 @@
 import math
 import time
-from typing import List
+from typing import List, Dict
 
 import ccxt
 import requests
@@ -12,8 +12,8 @@ from src.models.Pair import Pair
 
 class MEXCConnector(ExchangeConnector):
 
-    def __init__(self, api_key: str = "", api_secret: str = ""):
-        super().__init__(api_key, api_secret)
+    def __init__(self, api_key: str = "", api_secret: str = "", extra_args: Dict = {}):
+        super().__init__(api_key, api_secret, extra_args)
         if self.api_key == "" or self.api_secret == "":
             raise RuntimeError("MEXC: api key or api secret was empty, aborting...")
         self.mexc = ccxt.mexc({"apiKey": self.api_key, "secret": self.api_secret})
@@ -26,6 +26,13 @@ class MEXCConnector(ExchangeConnector):
             self.get_formatted_pair_str(pair),
             funds
         )
+
+    def get_balance(self, coin: Coin):
+        balances = self.mexc.fetch_balance({"currency": coin.symbol})["info"]["balances"]
+        for b in balances:
+            if b["asset"].upper() == coin.symbol.upper():
+                return float(b["free"])
+        return None
 
     def get_latest_pairs(self) -> List[Pair]:
         current_timestamp = math.floor(time.time() * 1000)

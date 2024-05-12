@@ -30,5 +30,5 @@ class ConfigLoader:
     def get_connectors(self, config: Config):
         connectors: List[ExchangeConnector] = []
         for e in config.exchange_configs:
-            connectors.append(ConnectorFactory.make_connector(e.name, e.api_key, e.api_secret))
+            connectors.append(ConnectorFactory.make_connector(e.name, e.api_key, e.api_secret, e.extra_args))
         return connectors

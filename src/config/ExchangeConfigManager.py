@@ -24,7 +24,7 @@ class ExchangeConfigManager:
             exchanges_configured: List[ExchangeDto] = list(
                 map(lambda ex: ExchangeDto(ex, self.exchanges[ex]["img"], self.exchanges[ex]["title"],
                                            exchanges_dict[ex]["funds"], self.exchanges[ex]["min_funds"],
-                                           exchanges_dict[ex]["active"]),
+                                           exchanges_dict[ex]["active"], exchanges_dict.get("extra_args")),
                     list(exchanges_dict.keys())))
         return exchanges_configured
 
@@ -35,10 +35,10 @@ class ExchangeConfigManager:
             if e.lower() not in list(map(lambda ex: ex.name.lower(), exchanges_configured)):
                 exchanges_not_configured.append(
                     ExchangeDto(e, self.exchanges[e]["img"], self.exchanges[e]["title"], 0,
-                                self.exchanges[e]["min_funds"], False))
+                                self.exchanges[e]["min_funds"], False, self.exchanges[e].get("extra_args")))
         return exchanges_not_configured
 
-    def add_exchange_config(self, name: str, api_key: str, api_secret: str, funds: float):
+    def add_exchange_config(self, name: str, api_key: str, api_secret: str, funds: float, extra_args: Dict):
         with open("config.json", 'r') as f:
             content = f.read()
             json_config = json.loads(content)
@@ -50,7 +50,7 @@ class ExchangeConfigManager:
             json_config["exchanges"][name] = {"api_key": api_key,
                                               "api_secret": api_secret,
                                               "funds": funds,
-                                              "active": True}
+                                              "active": True, "extra_args": {} if extra_args is None else extra_args}
             f.write(json.dumps(json_config))
         self.subscriber.on_update()
         self.subscriber.on_add()

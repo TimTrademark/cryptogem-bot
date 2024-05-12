@@ -28,9 +28,11 @@ def add_exchange_config():
     exchange_config_json = request.json
     try:
         manager.add_exchange_config(exchange_config_json["name"], exchange_config_json["api_key"],
-                                    exchange_config_json["api_secret"], float(exchange_config_json["funds"]))
+                                    exchange_config_json["api_secret"], float(exchange_config_json["funds"]),
+                                    exchange_config_json["extra_args"])
         return jsonify({"success": "true"})
     except Exception as e:
+        print(e)
         print("Error adding exchange configuration: " + str(e))
         return jsonify({"success": "false", "message": f"{str(e)}"})
 
@@ -61,5 +63,6 @@ def toggle_active_exchange_config():
 
 def _convert_exchanges_to_dict(exchanges: List[ExchangeDto]):
     return [
-        {"name": e.name, "img": e.img, "title": e.title, "funds": e.funds, "min_funds": e.min_funds, "active": e.active}
+        {"name": e.name, "img": e.img, "title": e.title, "funds": e.funds, "min_funds": e.min_funds, "active": e.active,
+         "extra_args": e.extra_args}
         for e in exchanges]
