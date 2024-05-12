@@ -53,7 +53,7 @@ def main():
             and os.environ.get("ENABLE_CONTROL_PANEL").upper() == "TRUE"
     ):
         threading.Thread(target=lambda: start_flask(config_loader), daemon=True).start()
-    logger.info("Started control panel")
+        logger.info("Started control panel")
     logger.info("Initializing exchanges...")
     init_last_non_tradable(config_loader.connectors, last_non_tradable)
     config_loader.append_add_callback(
