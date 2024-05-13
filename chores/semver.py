@@ -10,7 +10,7 @@ def write_semver():
 
 def get_semver():
     version = "0.0.0"
-    commits = repo.iter_commits()
+    commits = reversed(list(repo.iter_commits()))
     for c in commits:
         version_splitted = version.split(".")
         msg = c.message.lower()
