@@ -14,6 +14,7 @@ from src.api.ControlPanelController import ControlPanelController
 from src.config.ConfigLoader import ConfigLoader
 from src.config.ExchangeConfigManager import ExchangeConfigManager
 from src.connectors.ExchangeConnector import ExchangeConnector
+from src.models.Coin import Coin
 from src.models.ExchangeConfig import ExchangeConfig
 from src.models.Pair import Pair
 from src.utils.BrandingUtils import get_logo_ascii_art
@@ -82,7 +83,7 @@ def main():
                 )
 
         except Exception as e:
-            print(e)
+            logger.error(e)
         time.sleep(config.scheduling_timeout_seconds)
 
 
@@ -110,10 +111,14 @@ def compare_latest_pairs_and_trade(
     logger.debug(list(map(lambda lp: str(lp), latest_pairs)))
     for p in latest_pairs:
         if p.tradable and PairUtils.pair_exists_in_list(last_non_tradable, p):
-            logger.info(
-                f"{str(p)} has opened trading on {connector.get_connector_name()}, buying coin..."
-            )
-            buy(p, funds, connector)
+            if connector.get_balance(Coin("USDT")) >= funds:
+                logger.info(
+                    f"{str(p)} has opened trading on {connector.get_connector_name()}, buying coin..."
+                )
+                buy(p, funds, connector)
+            else:
+                logger.warning(
+                    f"${connector.get_connector_name()} has insufficient funds, aborting buy for ${str(p)}")
 
 
 def buy(pair: Pair, funds: float, connector: ExchangeConnector):

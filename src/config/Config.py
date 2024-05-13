@@ -18,7 +18,7 @@ class Config:
                 self.exchange_configs.append(
                     ExchangeConfig(e, exchanges_dict[e]["api_key"], exchanges_dict[e]["api_secret"],
                                    exchanges_dict[e]["funds"],
-                                   exchanges_dict[e]["active"]))
+                                   exchanges_dict[e]["active"], exchanges_dict[e].get("extra_args")))
 
     def get_exchange_config_by_name(self, name: str):
         for ec in self.exchange_configs:
