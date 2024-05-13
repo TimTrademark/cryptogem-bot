@@ -12,7 +12,7 @@ automatically buys new crypto listings.
 Configure the bot with ease using the web control panel.
 
 <p align="center">
-  <img alt="My Crypto Gem" src="https://github.com/TimTrademark/cryptogem-bot/raw/main/control_panel/static/images/control_panel_config_preview.gif">
+  <img alt="My Crypto Gem" src="https://github.com/TimTrademark/cryptogem-bot/raw/main/control_panel/static/images/control_panel_config_preview.png">
 </p>
 
 > Disclaimer: It is not recommended to host the control panel on a public facing machine, as it is not production-ready.
