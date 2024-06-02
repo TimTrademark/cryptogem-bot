@@ -22,6 +22,8 @@ jobs:
           kucoin_api_password: ${{ secrets.KUCOIN_TEST_PASSWORD }}
           mexc_api_key: ${{ secrets.MEXC_TEST_API_KEY }}
           mexc_api_secret: ${{ secrets.MEXC_TEST_API_SECRET }}
+          gateio_api_key: ${{ secrets.GATEIO_TEST_API_KEY }}
+          gateio_api_secret: ${{ secrets.GATEIO_TEST_API_SECRET }}
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
@@ -31,4 +33,6 @@ jobs:
           echo -e "KUCOIN_TEST_PASSWORD=$kucoin_api_password \n" >> .test.env
           echo -e "MEXC_TEST_API_KEY=$mexc_api_key \n" >> .test.env
           echo -e "MEXC_TEST_API_SECRET=$mexc_api_secret \n" >> .test.env
+          echo -e "GATEIO_TEST_API_KEY=$gateio_api_key \n" >> .test.env
+          echo -e "GATEIO_TEST_API_SECRET=$gateio_api_secret \n" >> .test.env
           python -m unittest discover -s tests

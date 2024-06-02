@@ -1,6 +1,7 @@
 from typing import Dict
 
 from src.connectors.ExchangeConnector import ExchangeConnector
+from src.connectors.GateIOConnector import GateIOConnector
 from src.connectors.KucoinConnector import KucoinConnector
 from src.connectors.MEXCConnector import MEXCConnector
 
@@ -14,3 +15,5 @@ class ConnectorFactory:
             return MEXCConnector(api_key, api_secret, extra_args)
         elif lower_name == 'kucoin':
             return KucoinConnector(api_key, api_secret, extra_args)
+        elif lower_name == 'gateio':
+            return GateIOConnector(api_key, api_secret, extra_args)
