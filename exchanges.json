@@ -12,6 +12,11 @@
       "extra_args": [
         "passphrase"
       ]
+    },
+    "gateio": {
+      "img": "gateio_logo.png",
+      "title": "GateIO",
+      "min_funds": 3.01
     }
   }
 }
