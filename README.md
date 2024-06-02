@@ -7,6 +7,12 @@
 <a href="https://www.mycryptogem.com" target="_blank">MyCryptoGem</a> is an open-source bot that scans exchanges and
 automatically buys new crypto listings.
 
+## Exchanges that are currently supported 📈
+
+- MEXC
+- Kucoin
+- Gate.io
+
 ## Configuration
 
 Configure the bot with ease using the web control panel.
