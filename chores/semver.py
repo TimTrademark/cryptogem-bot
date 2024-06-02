@@ -17,7 +17,7 @@ def get_semver():
         if msg.startswith("breaking:"):
             version = f"{int(version_splitted[0]) + 1}.0.0"
         elif msg.startswith("feat:"):
-            version = f"{version_splitted[0]}.{int(version_splitted[1]) + 1}.{version_splitted[2]}"
+            version = f"{version_splitted[0]}.{int(version_splitted[1]) + 1}.0"
         elif msg.startswith("fix:") or msg.startswith("perf:"):
             version = f"{version_splitted[0]}.{version_splitted[1]}.{int(version_splitted[2]) + 1}"
     return version
